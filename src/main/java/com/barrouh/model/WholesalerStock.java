@@ -44,7 +44,7 @@ public class WholesalerStock implements Serializable {
 		this.beer = beer;
 	}
 
-	@Column(name = "quantity", unique = true, nullable = false)
+	@Column(name = "quantity", nullable = false)
 	public int getQuantity() {
 		return quantity;
 	}

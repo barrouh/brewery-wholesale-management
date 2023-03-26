@@ -47,7 +47,7 @@ public class Beer implements Serializable {
 		this.name = name;
 	}
 	
-	@Column(name = "alcohol_percentage", unique = true, nullable = false)
+	@Column(name = "alcohol_percentage", nullable = false)
 	public float getAlcoholPercentage() {
 		return alcoholPercentage;
 	}
@@ -57,7 +57,7 @@ public class Beer implements Serializable {
 	}
 
 
-	@Column(name = "price", unique = true, nullable = false)
+	@Column(name = "price", nullable = false)
 	public float getPrice() {
 		return price;
 	}
