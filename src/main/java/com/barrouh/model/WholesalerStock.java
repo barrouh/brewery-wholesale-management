@@ -2,6 +2,8 @@ package com.barrouh.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "wholesaler_stock")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class WholesalerStock implements Serializable {
 
 	private static final long serialVersionUID = 1L;
