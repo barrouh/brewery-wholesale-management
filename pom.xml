@@ -22,7 +22,7 @@
 		<sonar.organization>barrouh-github</sonar.organization>
 		<sonar.projectKey>${project.artifactId}</sonar.projectKey>
 		<sonar.login>${sonarToken}</sonar.login>
-		<sonar.branch.name>develop</sonar.branch.name>
+		<sonar.branch.name>main</sonar.branch.name>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
