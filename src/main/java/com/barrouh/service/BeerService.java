@@ -61,7 +61,7 @@ public class BeerService {
 		if (!brewery.isPresent()) {
 			Object[] args = new Object[] { beer.getBreweryId() };
 			return new ResponseEntity<>(messageSource.getMessage(MessagesKeys.BREWERY_NOT_FOUND, args, Locale.ENGLISH),
-					HttpStatus.ACCEPTED);
+					HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(beerRepository.saveAndFlush(mapper.map(beer, Beer.class)), HttpStatus.CREATED);
 	}
