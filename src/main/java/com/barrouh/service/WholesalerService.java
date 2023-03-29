@@ -15,8 +15,14 @@ public class WholesalerService {
 
 	private final WholesalerRepository wholesalerRepository;
 
-	public Optional<Wholesaler> wholesalerById(Integer beerId) {
-		return wholesalerRepository.findById(beerId);
+	/**
+	 * find Wholesaler by Id
+	 * 
+	 * @param beerId
+	 * @return optional of Wholesaler
+	 */
+	public Optional<Wholesaler> wholesalerById(Integer wholesalerId) {
+		return wholesalerRepository.findById(wholesalerId);
 	}
 
 }

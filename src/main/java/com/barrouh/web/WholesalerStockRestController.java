@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barrouh.dto.OrderDto;
 import com.barrouh.dto.WholesalerStockDto;
 import com.barrouh.service.WholesalerStockService;
 
@@ -39,6 +40,17 @@ public class WholesalerStockRestController {
 	@PatchMapping("/update")
 	public ResponseEntity<String> updateStock(@RequestBody WholesalerStockDto wholesalerStock) {
 		return wholesalerStockService.updateWholesalerStock(wholesalerStock);
+	}
+
+	/**
+	 * FR6- A client can request a quote from a wholesaler
+	 * 
+	 * @param order
+	 * @return Order Summary or message
+	 */
+	@PostMapping("/order")
+	public ResponseEntity<Object> order(@RequestBody OrderDto order) {
+		return wholesalerStockService.makeOrder(order);
 	}
 
 }
