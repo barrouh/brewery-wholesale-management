@@ -34,4 +34,9 @@ public class WholesalerStockId implements Serializable {
 		this.beerId = beerId;
 	}
 
+	@Override
+	public String toString() {
+		return "[wholesalerId=" + wholesalerId + ", beerId=" + beerId + "]";
+	}
+
 }

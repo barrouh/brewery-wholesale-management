@@ -18,15 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "wholesaler_stock")
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer" })
 public class WholesalerStock implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private WholesalerStockId id;
-	private Beer beer;
 	private int quantity;
+	private Beer beer;
 	private Wholesaler wholesaler;
+
+	public WholesalerStock(WholesalerStockId id, int quantity) {
+		this.id = id;
+		this.quantity = quantity;
+	}
 
 	@EmbeddedId
 	public WholesalerStockId getId() {
@@ -37,6 +42,15 @@ public class WholesalerStock implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "quantity", nullable = false)
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(insertable = false, updatable = false)
 	public Beer getBeer() {
@@ -45,15 +59,6 @@ public class WholesalerStock implements Serializable {
 
 	public void setBeer(Beer beer) {
 		this.beer = beer;
-	}
-
-	@Column(name = "quantity", nullable = false)
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
