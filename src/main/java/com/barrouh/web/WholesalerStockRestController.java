@@ -26,8 +26,8 @@ public class WholesalerStockRestController {
 	 * @param wholesalerStock
 	 * @return message
 	 */
-	@PostMapping("/save")
-	public ResponseEntity<Object> saveWholesalerStock(@RequestBody WholesalerStockDto wholesalerStock) {
+	@PostMapping("/add")
+	public ResponseEntity<Object> addWholesalerStock(@RequestBody WholesalerStockDto wholesalerStock) {
 		return wholesalerStockService.addWholesalerStock(wholesalerStock);
 	}
 

@@ -82,7 +82,7 @@ public class WholesalerStockService {
 					HttpStatus.NOT_FOUND);
 		}
 
-		// update WholesalerStock
+		// save WholesalerStock
 		WholesalerStock wholesalerStock = wholesalerStockRepository
 				.saveAndFlush(new WholesalerStock(id, wsDto.getQuantity()));
 		return new ResponseEntity<>(wholesalerStock, HttpStatus.CREATED);
@@ -100,6 +100,7 @@ public class WholesalerStockService {
 		Optional<WholesalerStock> wholesalerStockOp = wholesalerStockById(id);
 		// check if WholesalerStock is not exist
 		if (wholesalerStockOp.isPresent()) {
+			// update WholesalerStock
 			wholesalerStockRepository.save(new WholesalerStock(id, wholesalerStock.getQuantity()));
 			return new ResponseEntity<>(
 					messageSource.getMessage(MessagesKeys.WHOLESALERSTOCK_UPDATED, args, Locale.ENGLISH),
@@ -125,7 +126,7 @@ public class WholesalerStockService {
 		}
 		// check if Order is duplicated
 		if (isOrderDuplicated(order.getBeers())) {
-			return new ResponseEntity<>(messageSource.getMessage(MessagesKeys.ORDER_EMPTY, null, Locale.ENGLISH),
+			return new ResponseEntity<>(messageSource.getMessage(MessagesKeys.DUPLICATE_ORDER, null, Locale.ENGLISH),
 					HttpStatus.NOT_FOUND);
 		}
 		// check if Wholesaler is not exist
