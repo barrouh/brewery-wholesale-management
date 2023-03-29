@@ -1,6 +1,7 @@
 package com.barrouh.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import lombok.Data;
 
@@ -12,7 +13,7 @@ public class BeerDto implements Serializable {
 	private Integer id;
 	private String name;
 	private float alcoholPercentage;
-	private float price;
+	private BigDecimal price;
 	private Integer breweryId;
 
 }

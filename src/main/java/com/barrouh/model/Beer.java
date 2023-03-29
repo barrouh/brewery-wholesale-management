@@ -1,6 +1,7 @@
 package com.barrouh.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ public class Beer implements Serializable {
 	private Integer id;
 	private String name;
 	private float alcoholPercentage;
-	private float price;
+	private BigDecimal price;
 	private Integer breweryId;
 	private Brewery brewery;
 
@@ -59,11 +60,11 @@ public class Beer implements Serializable {
 	}
 
 	@Column(name = "price", nullable = false)
-	public float getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

@@ -1,6 +1,7 @@
 package com.barrouh.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class OrderSummaryDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Wholesaler wholesaler;
-	private float total;
-	private float totalAfterDiscount;
+	private BigDecimal total;
+	private BigDecimal totalAfterDiscount;
 	private int totalQuantity;
 	private List<OrderBeer> beers;
 

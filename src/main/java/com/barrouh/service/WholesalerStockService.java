@@ -1,5 +1,6 @@
 package com.barrouh.service;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -164,11 +165,11 @@ public class WholesalerStockService {
 	}
 
 	private void calculatePrice(OrderSummaryDto orderSummary) {
-		float total = 0;
+		BigDecimal total = new BigDecimal(0);
 		int totalQuantity = 0;
 		for (OrderBeer beer : orderSummary.getBeers()) {
 			// calculate total price in order
-			total += beer.getPrice() * beer.getQuantity();
+			total = total.add(beer.getPrice().multiply(BigDecimal.valueOf(beer.getQuantity())));
 			// calculate total beers in order
 			totalQuantity += beer.getQuantity();
 			// update stock
@@ -182,18 +183,21 @@ public class WholesalerStockService {
 
 		}
 		orderSummary.setTotalQuantity(totalQuantity);
-		orderSummary.setTotal(total / 1.0f);
+		orderSummary.setTotal(total);
 		// calculate discount
 		calculateDiscount(orderSummary);
 
 	}
 
 	private void calculateDiscount(OrderSummaryDto orderSummary) {
-		float totalAfterDiscount = orderSummary.getTotal();
+		BigDecimal totalAfterDiscount = orderSummary.getTotal();
+		BigDecimal discount;
 		if (orderSummary.getTotalQuantity() > discountAbove20) {
-			totalAfterDiscount -= totalAfterDiscount * discountAbove20 / 100;
+			discount = totalAfterDiscount.multiply(BigDecimal.valueOf(discountAbove20).divide(BigDecimal.valueOf(100)));
+			totalAfterDiscount = totalAfterDiscount.subtract(discount);
 		} else if (orderSummary.getTotalQuantity() > discountAbove10) {
-			totalAfterDiscount -= totalAfterDiscount * discountAbove10 / 100;
+			discount = totalAfterDiscount.multiply(BigDecimal.valueOf(discountAbove10).divide(BigDecimal.valueOf(100)));
+			totalAfterDiscount = totalAfterDiscount.subtract(discount);
 		}
 		orderSummary.setTotalAfterDiscount(totalAfterDiscount);
 	}
