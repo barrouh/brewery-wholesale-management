@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class Beer implements Serializable {
 	private String name;
 	private float alcoholPercentage;
 	private float price;
+	private Integer breweryId;
 	private Brewery brewery;
 
 	@Id
@@ -46,7 +48,7 @@ public class Beer implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Column(name = "alcohol_percentage", nullable = false)
 	public float getAlcoholPercentage() {
 		return alcoholPercentage;
@@ -56,7 +58,6 @@ public class Beer implements Serializable {
 		this.alcoholPercentage = alcoholPercentage;
 	}
 
-
 	@Column(name = "price", nullable = false)
 	public float getPrice() {
 		return price;
@@ -65,8 +66,18 @@ public class Beer implements Serializable {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
+
+	@Column(name = "brewery_id", nullable = false)
+	public Integer getBreweryId() {
+		return breweryId;
+	}
+
+	public void setBreweryId(Integer breweryId) {
+		this.breweryId = breweryId;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "brewery_id", insertable = false, updatable = false)
 	public Brewery getBrewery() {
 		return brewery;
 	}

@@ -2,6 +2,7 @@ package com.barrouh.conf;
 
 import java.util.Locale;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,11 @@ public class AppConfiguration {
 		messageSource.setDefaultLocale(Locale.ENGLISH);
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
+	}
+
+	@Bean
+	public ModelMapper mapper() {
+		return new ModelMapper();
 	}
 
 }

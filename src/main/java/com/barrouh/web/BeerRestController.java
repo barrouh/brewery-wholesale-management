@@ -1,10 +1,7 @@
 package com.barrouh.web;
 
 import java.util.List;
-import java.util.Locale;
 
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +23,6 @@ public class BeerRestController {
 
 	private final BeerService beerService;
 
-	private final MessageSource messageSource;
-
 	/**
 	 * FR1- List all the beers by brewery
 	 * 
@@ -36,18 +31,18 @@ public class BeerRestController {
 	 */
 	@GetMapping("/{breweryId}")
 	public ResponseEntity<List<Beer>> beersByBrewery(@PathVariable("breweryId") Integer breweryId) {
-		return new ResponseEntity<>(beerService.getBeersByBrewery(breweryId), HttpStatus.OK);
+		return beerService.beersByBrewery(breweryId);
 	}
 
 	/**
 	 * FR2- A brewer can add new beer.
 	 * 
 	 * @param beer
-	 * @return created beer
+	 * @return created beer or message
 	 */
 	@PostMapping("/")
-	public ResponseEntity<Beer> addBeer(@RequestBody BeerDto beer) {
-		return new ResponseEntity<>(beerService.addBeer(beer), HttpStatus.CREATED);
+	public ResponseEntity<Object> addBeer(@RequestBody BeerDto beer) {
+		return beerService.addBeer(beer);
 	}
 
 	/**
@@ -58,15 +53,7 @@ public class BeerRestController {
 	 */
 	@PostMapping("{breweryId}")
 	public ResponseEntity<String> deleteBeer(@PathVariable("breweryId") Integer beerId) {
-		Object[] args = new Object[] { beerId };
-		if (beerService.beerById(beerId).isPresent()) {
-			beerService.deleteBeerById(beerId);
-			return new ResponseEntity<>(messageSource.getMessage("beer.deleted", args, Locale.ENGLISH),
-					HttpStatus.ACCEPTED);
-		} else {
-			return new ResponseEntity<>(messageSource.getMessage("beer.not.found", args, Locale.ENGLISH),
-					HttpStatus.NOT_FOUND);
-		}
+		return beerService.deleteBeerById(beerId);
 	}
 
 }
