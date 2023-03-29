@@ -28,4 +28,4 @@ jobs:
         distribution: 'oracle'
         cache: maven
     - name: Build with Maven
-      run: clean install -Dsonar.login=83b27a65b7d596c37172f46ebe0bd0c5ed921b91 --file pom.xml
+      run: mvn -B package --file pom.xml
