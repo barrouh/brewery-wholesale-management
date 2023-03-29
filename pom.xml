@@ -25,6 +25,9 @@
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.exclusions>src/main/java/com/barrouh/BreweryWholesaleManagementApplication.java,
+			src/main/java/com/barrouh/model/*.java,
+			src/main/java/com/barrouh/dto/*.java</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
