@@ -1,0 +1,876 @@
+{
+	"info": {
+		"_postman_id": "20d6ad31-5d3a-40ff-91f9-60e9283ac208",
+		"name": "brewery_wholesale_management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FR1",
+			"item": [
+				{
+					"name": "FR1 - beers by brewery - empty response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test('Number of Beers = ' + data.length, function () {\r",
+									"    pm.expect(data.length).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/0",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR1 - beers by brewery - OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.test('Number of Beers = ' + data.length, function () {\r",
+									"    pm.expect(data.length).to.equal(3);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FR2",
+			"item": [
+				{
+					"name": "FR2 - add beer - OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content-Type header is application/json\", () => {\r",
+									"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Test\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 100,\r\n  \"name\": \"Test\",\r\n  \"alcoholPercentage\": 5,\r\n  \"price\": 2,\r\n  \"breweryId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR2 - add beer -  KO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Brewery with Id 100 not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 100,\r\n  \"name\": \"Test\",\r\n  \"alcoholPercentage\": 5,\r\n  \"price\": 2,\r\n  \"breweryId\": 100\r\n}"
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FR3",
+			"item": [
+				{
+					"name": "FR3 - delete beer - OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", () => {\r",
+									"  pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Beer with Id 100 has been deleted\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/100",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR3 - delete beer - KO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Beer with Id 100 not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/api/v1/beers/100",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"beers",
+								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FR4",
+			"item": [
+				{
+					"name": "FR4 - add wholesalers stock - OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"562\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beerId\": 3,\r\n  \"quantity\": 562\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/add",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR4 - add wholesalers stock - KO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Beer with Id 111 not found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beerId\": 111,\r\n  \"quantity\": 562\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/add",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FR5",
+			"item": [
+				{
+					"name": "FR5 - update wholesalers stock - OK",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", () => {\r",
+									"  pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Wholesaler Stock with Id [wholesalerId=1, beerId=1] has been updated\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beerId\": 1,\r\n  \"quantity\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/update",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR5 - update wholesalers stock - KO",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Wholesaler Stock with Id [wholesalerId=1, beerId=4] not found.\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beerId\": 4,\r\n  \"quantity\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/update",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FR6",
+			"item": [
+				{
+					"name": "FR6 -  order - no discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"21.00\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 5\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 5\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order - 10% discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"20.880\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 6\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 5\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order  - 20% discount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"35.360\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 11\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order - empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"There can't be any duplicate in the order\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 5\r\n    },\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 5\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order - duplicated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The order cannot be empty\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 11\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order  - wholesaler must exist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The wholesaler must exist\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 110,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 11\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order  - number of beers ordered cannot be greater than the wholesaler's stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The number of beers ordered cannot be greater than the wholesaler's stock\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 1,\r\n      \"quantity\": 500\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FR6 -  order  - beer must be sold by the wholesaler Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"  pm.response.to.have.status(404);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"The beer must be sold by the wholesaler\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"wholesalerId\": 1,\r\n  \"beers\": [\r\n    {\r\n      \"id\": 4,\r\n      \"quantity\": 11\r\n    },\r\n    {\r\n      \"id\": 2,\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/api/v1/wholesalers-stock/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"wholesalers-stock",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}
